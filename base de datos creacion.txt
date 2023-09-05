@@ -1,31 +1,38 @@
 CREATE TABLE [dbo].[referencia](
-	[id_factura] [varchar](255) NULL,
-	[NroLinRef] [varchar](255) NULL,
-	[TpoDocRef] [varchar](50) NULL,
-	[FolioRef] [varchar](50) NULL,
-	[FchRef] [varchar](255) NULL,
-	[Fecha_ingreso_xml] [datetime] NULL DEFAULT GETDATE()
-) ON [PRIMARY]
+    [id_referencia] INT IDENTITY(1,1) PRIMARY KEY,
+    [fk_id_factura] INT NULL,
+    [id_factura] [varchar](255) NULL,
+    [NroLinRef] [varchar](255) NULL,
+    [TpoDocRef] [varchar](50) NULL,
+    [FolioRef] [varchar](50) NULL,
+    [FchRef] [varchar](255) NULL,
+    [Fecha_ingreso_xml] [datetime] NULL DEFAULT GETDATE(),
+    CONSTRAINT FK_referencia_factura FOREIGN KEY (fk_id_factura) REFERENCES factura(id)
+) ON [PRIMARY];
 ________________________________________________________________________
 CREATE TABLE [dbo].[detalle](
-	[id_factura] [varchar](255) NULL,
-	[NroLinDet] [varchar](255) NULL,
-	[NmbItem] [varchar](255) NULL,
-	[DscItem] [varchar](255) NULL,
-	[QtyItem] [varchar](255) NULL,
-	[UnmdItem] [varchar](50) NULL,
-	[PrcItem] [varchar](255) NULL,
-	[MontoItem] [varchar](255) NULL,
-	[VlrCodigo] [varchar](50) NULL,
-	[TpoCodigo] [varchar](50) NULL,
-	[Qtyref] [varchar](255) NULL,
-	[UnmdRef] [varchar](255) NULL,
-	[FchVencim] [date] NULL,
-	[Fecha_ingreso_xml] [datetime] NULL DEFAULT GETDATE()
-) ON [PRIMARY]
+    [id_detalle] INT IDENTITY(1,1) PRIMARY KEY,
+    [fk_id_factura] INT NULL,
+    [id_factura] [varchar](255) NULL,
+    [NroLinDet] [varchar](255) NULL,
+    [NmbItem] [varchar](255) NULL,
+    [DscItem] [varchar](255) NULL,
+    [QtyItem] [varchar](255) NULL,
+    [UnmdItem] [varchar](50) NULL,
+    [PrcItem] [varchar](255) NULL,
+    [MontoItem] [varchar](255) NULL,
+    [VlrCodigo] [varchar](50) NULL,
+    [TpoCodigo] [varchar](50) NULL,
+    [Qtyref] [varchar](255) NULL,
+    [UnmdRef] [varchar](255) NULL,
+    [FchVencim] [date] NULL,
+    [Fecha_ingreso_xml] [datetime] NULL DEFAULT GETDATE(),
+    CONSTRAINT FK_detalle_factura FOREIGN KEY (fk_id_factura) REFERENCES factura(id)
+) ON [PRIMARY];
 
 ________________________________________________________________________
 CREATE TABLE [dbo].[factura](
+	[id] INT IDENTITY(1,1) PRIMARY KEY,
 	[id_factura] [varchar](255) NULL,
 	[rut_emisor] [varchar](50) NULL,
 	[rut_envia] [varchar](50) NULL,
