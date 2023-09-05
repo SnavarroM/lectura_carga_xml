@@ -6,8 +6,7 @@ CREATE TABLE [dbo].[referencia](
     [TpoDocRef] [varchar](50) NULL,
     [FolioRef] [varchar](50) NULL,
     [FchRef] [varchar](255) NULL,
-    [Fecha_ingreso_xml] [datetime] NULL DEFAULT GETDATE(),
-    CONSTRAINT FK_referencia_factura FOREIGN KEY (fk_id_factura) REFERENCES factura(id)
+    [Fecha_ingreso_xml] [datetime] NULL DEFAULT GETDATE(),    
 ) ON [PRIMARY];
 ________________________________________________________________________
 CREATE TABLE [dbo].[detalle](
@@ -26,8 +25,7 @@ CREATE TABLE [dbo].[detalle](
     [Qtyref] [varchar](255) NULL,
     [UnmdRef] [varchar](255) NULL,
     [FchVencim] [date] NULL,
-    [Fecha_ingreso_xml] [datetime] NULL DEFAULT GETDATE(),
-    CONSTRAINT FK_detalle_factura FOREIGN KEY (fk_id_factura) REFERENCES factura(id)
+    [Fecha_ingreso_xml] [datetime] NULL DEFAULT GETDATE(),    
 ) ON [PRIMARY];
 
 ________________________________________________________________________
