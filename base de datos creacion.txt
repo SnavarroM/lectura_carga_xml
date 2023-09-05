@@ -1,6 +1,6 @@
 CREATE TABLE [dbo].[referencia](
     [id_referencia] INT IDENTITY(1,1) PRIMARY KEY,
-    [fk_id_factura] INT NULL,
+    [fk_id_factura] INT NOT NULL,
     [id_factura] [varchar](255) NULL,
     [NroLinRef] [varchar](255) NULL,
     [TpoDocRef] [varchar](50) NULL,
@@ -8,6 +8,7 @@ CREATE TABLE [dbo].[referencia](
     [FchRef] [varchar](255) NULL,
     [Fecha_ingreso_xml] [datetime] NULL DEFAULT GETDATE(),    
 ) ON [PRIMARY];
+
 ________________________________________________________________________
 CREATE TABLE [dbo].[detalle](
     [id_detalle] INT IDENTITY(1,1) PRIMARY KEY,
