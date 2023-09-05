@@ -12,7 +12,7 @@ CREATE TABLE [dbo].[referencia](
 ________________________________________________________________________
 CREATE TABLE [dbo].[detalle](
     [id_detalle] INT IDENTITY(1,1) PRIMARY KEY,
-    [fk_id_factura] INT NULL,
+    [fk_id_factura] INT NOT NULL,
     [rol_unico] [varchar](255) NULL,
     [NroLinDet] [varchar](255) NULL,
     [NmbItem] [varchar](255) NULL,
