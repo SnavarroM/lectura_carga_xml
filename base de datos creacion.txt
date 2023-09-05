@@ -1,7 +1,7 @@
 CREATE TABLE [dbo].[referencia](
     [id_referencia] INT IDENTITY(1,1) PRIMARY KEY,
     [fk_id_factura] INT NOT NULL,
-    [id_factura] [varchar](255) NULL,
+    [rol_unico] [varchar](255) NULL,
     [NroLinRef] [varchar](255) NULL,
     [TpoDocRef] [varchar](50) NULL,
     [FolioRef] [varchar](50) NULL,
@@ -13,7 +13,7 @@ ________________________________________________________________________
 CREATE TABLE [dbo].[detalle](
     [id_detalle] INT IDENTITY(1,1) PRIMARY KEY,
     [fk_id_factura] INT NULL,
-    [id_factura] [varchar](255) NULL,
+    [rol_unico] [varchar](255) NULL,
     [NroLinDet] [varchar](255) NULL,
     [NmbItem] [varchar](255) NULL,
     [DscItem] [varchar](255) NULL,
@@ -32,7 +32,7 @@ CREATE TABLE [dbo].[detalle](
 ________________________________________________________________________
 CREATE TABLE [dbo].[factura](
 	[id] INT IDENTITY(1,1) PRIMARY KEY,
-	[id_factura] [varchar](255) NULL,
+	[rol_unico] [varchar](255) NULL,
 	[rut_emisor] [varchar](50) NULL,
 	[rut_envia] [varchar](50) NULL,
 	[rut_receptor] [varchar](50) NULL,
