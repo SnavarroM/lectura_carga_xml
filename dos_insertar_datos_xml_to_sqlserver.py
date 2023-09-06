@@ -7,15 +7,15 @@ import time
 # Función para realizar el ciclo cada 60 segundos
 def execute_cycle():
     # Establecer la conexión a la base de datos
-    server = 'ESCRITORIO'
+    server = '10.8.0.51'
     database = 'prueba_xml_3'
-    username = 'sa'
+    username = 'LOC_SNAVARRO'
     password = 'caramelo7613'
     conn = pyodbc.connect('DRIVER={ODBC Driver 17 for SQL Server};SERVER=' +server+';DATABASE='+database+';UID='+username+';PWD=' + password)
     cursor = conn.cursor()
 
     # Ruta de la carpeta donde se encuentran los archivos XML
-    folder_path = (r"C:\Users\chilo\Downloads\ejecucion_xml-20230819T172426Z-001\ejecucion_xml\data")
+    folder_path = r'C:\Users\snavarro\Desktop\proyecto\factura_xml-main_2\carga_produccion\data'
 
     # Lista para almacenar los nombres de los archivos leídos
     read_files = []
@@ -204,18 +204,18 @@ def execute_cycle():
 
             #!_________________________________________fin 49 campos en factura_________________________________________________________
 
-            # Concatenar los valores de rut_emisor, tpo_dte y folio para crear el valor de id_factura
-            id_factura = rut_emisor + tpo_dte + folio 
+            # Concatenar los valores de rut_emisor, tpo_dte y folio para crear el valor de rol_unico
+            rol_unico = rut_emisor + tpo_dte + folio 
             
 
-            # Verificar si el valor de id_factura ya existe en la tabla "factura"
-            cursor.execute("SELECT id_factura FROM factura WHERE id_factura = ?", id_factura)
+            # Verificar si el valor de rol_unico ya existe en la tabla "factura"
+            cursor.execute("SELECT rol_unico FROM factura WHERE rol_unico = ?", rol_unico)
             row = cursor.fetchone()
 
             if row:
-                # Si el valor de id_factura ya existe, actualizar los valores en la tabla "factura"            
+                # Si el valor de rol_unico ya existe, actualizar los valores en la tabla "factura"            
 
-                cursor.execute("UPDATE factura SET rut_emisor = ?, rut_envia = ?, rut_receptor = ?, fch_resol = ?, nro_resol = ?, tmst_firma_env = ?, tpo_dte = ?, nro_dte = ?, folio = ?, fecha_emision = ?, term_pago_glosa = ?, fecha_vencimiento = ?, razon_social = ?, giro_emisor = ?, acteca = ?, cod_sii_sucur = ?, direccion_origen = ?, comuna_origen = ?, ciudad_origen = ?, codigo_vendedor = ?, CdgIntRecep = ?, RznSocRecep = ?, GiroRecep = ?, DirRecep = ?, CmnaRecep = ?, CiudadRecep = ?, DirDest = ?, CmnaDest = ?, CiudadDest = ?, MntNeto = ?, MntExe = ?, TasaIVA = ?, IVA = ?, MntTotal = ?, NroLinRef = ?, TpoDocRef = ?, FolioRef = ?, FchRef = ?, RE = ?, TD = ?, F = ?, FE = ?, RR = ?, RSR = ?, MNT = ?, IT1 = ?, RS = ?, D = ?, H = ?, Telefono = ?, CorreoEmisor = ?, Contacto = ?, CmnaPostal = ?, CiudadPostal = ? WHERE id_factura = ?",rut_emisor, rut_envia, rut_receptor, fch_resol, nro_resol, tmst_firma_env, tpo_dte, nro_dte, folio, fecha_emision, term_pago_glosa, fecha_vencimiento, razon_social, giro_emisor, acteca, cod_sii_sucur, direccion_origen, comuna_origen, ciudad_origen, codigo_vendedor, CdgIntRecep, RznSocRecep, GiroRecep, DirRecep, CmnaRecep, CiudadRecep, DirDest, CmnaDest, CiudadDest, MntNeto, MntExe, TasaIVA, IVA, MntTotal, NroLinRef, TpoDocRef, FolioRef, FchRef, RE, TD, F, FE, RR, RSR, MNT, IT1, RS, D, H, Telefono, CorreoEmisor, Contacto, CmnaPostal, CiudadPostal, id_factura)
+                cursor.execute("UPDATE factura SET rut_emisor = ?, rut_envia = ?, rut_receptor = ?, fch_resol = ?, nro_resol = ?, tmst_firma_env = ?, tpo_dte = ?, nro_dte = ?, folio = ?, fecha_emision = ?, term_pago_glosa = ?, fecha_vencimiento = ?, razon_social = ?, giro_emisor = ?, acteca = ?, cod_sii_sucur = ?, direccion_origen = ?, comuna_origen = ?, ciudad_origen = ?, codigo_vendedor = ?, CdgIntRecep = ?, RznSocRecep = ?, GiroRecep = ?, DirRecep = ?, CmnaRecep = ?, CiudadRecep = ?, DirDest = ?, CmnaDest = ?, CiudadDest = ?, MntNeto = ?, MntExe = ?, TasaIVA = ?, IVA = ?, MntTotal = ?, NroLinRef = ?, TpoDocRef = ?, FolioRef = ?, FchRef = ?, RE = ?, TD = ?, F = ?, FE = ?, RR = ?, RSR = ?, MNT = ?, IT1 = ?, RS = ?, D = ?, H = ?, Telefono = ?, CorreoEmisor = ?, Contacto = ?, CmnaPostal = ?, CiudadPostal = ? WHERE rol_unico = ?",rut_emisor, rut_envia, rut_receptor, fch_resol, nro_resol, tmst_firma_env, tpo_dte, nro_dte, folio, fecha_emision, term_pago_glosa, fecha_vencimiento, razon_social, giro_emisor, acteca, cod_sii_sucur, direccion_origen, comuna_origen, ciudad_origen, codigo_vendedor, CdgIntRecep, RznSocRecep, GiroRecep, DirRecep, CmnaRecep, CiudadRecep, DirDest, CmnaDest, CiudadDest, MntNeto, MntExe, TasaIVA, IVA, MntTotal, NroLinRef, TpoDocRef, FolioRef, FchRef, RE, TD, F, FE, RR, RSR, MNT, IT1, RS, D, H, Telefono, CorreoEmisor, Contacto, CmnaPostal, CiudadPostal, rol_unico)
                 # Definir las variables para la sentencia "UPDATE" en la tabla "detalle"
                 for documento in root.getElementsByTagName('Documento'):
                     id = documento.getAttribute('ID')
@@ -270,7 +270,7 @@ def execute_cycle():
 
                         #!_________________________________________fin 7 campos en detalle_________________________________________________________ 
                         # Actualizar los valores en la tabla "detalle"
-                        cursor.execute("UPDATE detalle SET NroLinDet = ?, NmbItem = ?, DscItem = ?, QtyItem = ?, UnmdItem = ?, PrcItem = ?, MontoItem = ?, VlrCodigo =?, TpoCodigo = ?, Qtyref = ?, UnmdRef = ?, FchVencim = ? WHERE id_factura = ?", NroLinDet, NmbItem, DscItem, QtyItem, UnmdItem, PrcItem, MontoItem, VlrCodigo, TpoCodigo, Qtyref, UnmdRef,FchVencim, id_factura)
+                        cursor.execute("UPDATE detalle SET NroLinDet = ?, NmbItem = ?, DscItem = ?, QtyItem = ?, UnmdItem = ?, PrcItem = ?, MontoItem = ?, VlrCodigo =?, TpoCodigo = ?, Qtyref = ?, UnmdRef = ?, FchVencim = ? WHERE rol_unico = ?", NroLinDet, NmbItem, DscItem, QtyItem, UnmdItem, PrcItem, MontoItem, VlrCodigo, TpoCodigo, Qtyref, UnmdRef,FchVencim, rol_unico)
             
                 #!_________________________________________________________ UPDATE 4 campos referencias ____________________________________________________________
                 for documento in root.getElementsByTagName('Documento'):
@@ -285,14 +285,33 @@ def execute_cycle():
 
                         
                         # Actualizar los valores en la tabla "detalle"
-                        cursor.execute("UPDATE referencia SET NroLinRef = ?, TpoDocRef = ?, FolioRef = ?, FchRef = ? WHERE id_factura = ?", NroLinRef, TpoDocRef, FolioRef, FchRef, id_factura)
+                        cursor.execute("UPDATE referencia SET NroLinRef = ?, TpoDocRef = ?, FolioRef = ?, FchRef = ? WHERE rol_unico = ?", NroLinRef, TpoDocRef, FolioRef, FchRef, rol_unico)
 
                 #!_________________________________________________________fin UPDATE 4 campos referencias ____________________________________________________________
             
             
             else:
-                # Si el valor de id_factura no existe, insertar los valores en la tabla "factura"
-                cursor.execute("INSERT INTO factura (id_factura, rut_emisor, rut_envia, rut_receptor, fch_resol, nro_resol, tmst_firma_env, tpo_dte, nro_dte, folio, fecha_emision, term_pago_glosa, fecha_vencimiento, razon_social, giro_emisor, acteca, cod_sii_sucur, direccion_origen, comuna_origen, ciudad_origen, codigo_vendedor, CdgIntRecep, RznSocRecep, GiroRecep, DirRecep, CmnaRecep, CiudadRecep, DirDest, CmnaDest, CiudadDest, MntNeto, MntExe, TasaIVA, IVA, MntTotal, NroLinRef, TpoDocRef, FolioRef, FchRef, RE, TD, F, FE, RR, RSR, MNT, IT1, RS, D, H, Telefono, CorreoEmisor, Contacto, CmnaPostal, CiudadPostal) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",id_factura, rut_emisor, rut_envia, rut_receptor, fch_resol, nro_resol, tmst_firma_env, tpo_dte, nro_dte, folio, fecha_emision, term_pago_glosa, fecha_vencimiento, razon_social, giro_emisor, acteca, cod_sii_sucur, direccion_origen, comuna_origen, ciudad_origen, codigo_vendedor, CdgIntRecep, RznSocRecep, GiroRecep, DirRecep, CmnaRecep, CiudadRecep, DirDest, CmnaDest, CiudadDest, MntNeto, MntExe, TasaIVA, IVA, MntTotal, NroLinRef, TpoDocRef, FolioRef, FchRef, RE, TD, F, FE, RR, RSR, MNT, IT1, RS, D, H, Telefono, CorreoEmisor, Contacto, CmnaPostal, CiudadPostal)
+                # Si el valor de rol_unico no existe, insertar los valores en la tabla "factura"
+                cursor.execute("INSERT INTO factura (rol_unico, rut_emisor, rut_envia, rut_receptor, fch_resol, nro_resol, tmst_firma_env, tpo_dte, nro_dte, folio, fecha_emision, term_pago_glosa, fecha_vencimiento, razon_social, giro_emisor, acteca, cod_sii_sucur, direccion_origen, comuna_origen, ciudad_origen, codigo_vendedor, CdgIntRecep, RznSocRecep, GiroRecep, DirRecep, CmnaRecep, CiudadRecep, DirDest, CmnaDest, CiudadDest, MntNeto, MntExe, TasaIVA, IVA, MntTotal, NroLinRef, TpoDocRef, FolioRef, FchRef, RE, TD, F, FE, RR, RSR, MNT, IT1, RS, D, H, Telefono, CorreoEmisor, Contacto, CmnaPostal, CiudadPostal) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",rol_unico, rut_emisor, rut_envia, rut_receptor, fch_resol, nro_resol, tmst_firma_env, tpo_dte, nro_dte, folio, fecha_emision, term_pago_glosa, fecha_vencimiento, razon_social, giro_emisor, acteca, cod_sii_sucur, direccion_origen, comuna_origen, ciudad_origen, codigo_vendedor, CdgIntRecep, RznSocRecep, GiroRecep, DirRecep, CmnaRecep, CiudadRecep, DirDest, CmnaDest, CiudadDest, MntNeto, MntExe, TasaIVA, IVA, MntTotal, NroLinRef, TpoDocRef, FolioRef, FchRef, RE, TD, F, FE, RR, RSR, MNT, IT1, RS, D, H, Telefono, CorreoEmisor, Contacto, CmnaPostal, CiudadPostal)
+                # # Obtén el ID de la última factura insertada
+                # cursor.execute("SELECT SCOPE_IDENTITY()")
+                # factura_id = cursor.fetchone()[0]          
+
+                # # Imprimir el ID en la consola
+                # print("El ID de la factura es:", factura_id)
+
+                # Obtener el ID de la factura recién insertada
+                cursor.execute("SELECT id FROM factura WHERE rol_unico = ?", (rol_unico,))
+                result = cursor.fetchone()
+
+                if result is not None:
+                    factura_id = result[0]  # Obtener el ID de la consulta
+
+                    # Imprimir el ID en la consola
+                    print("El ID de la factura es:", factura_id)
+                else:
+                    print("No se pudo obtener el ID de la factura")
+                
                 #!_______________________________ Insertar los valores en la tabla "detalle"__________________________________________________________
                 for documento in root.getElementsByTagName('Documento'):
                     id = documento.getAttribute('ID')
@@ -342,7 +361,13 @@ def execute_cycle():
                         #?_________________________________________Fin Nuevo Detalle_________________________________    
 
 
-                        cursor.execute("INSERT INTO detalle (id_factura, NroLinDet, NmbItem, DscItem, QtyItem, UnmdItem, PrcItem, MontoItem, VlrCodigo, TpoCodigo, Qtyref, UnmdRef, FchVencim)VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)",(id_factura, NroLinDet, NmbItem, DscItem, QtyItem, UnmdItem, PrcItem, MontoItem, VlrCodigo, TpoCodigo, Qtyref, UnmdRef, FchVencim))
+                        
+                        # Luego, inserta los detalles solo si se obtuvo un ID de factura válido
+                        if factura_id is not None:
+                            cursor.execute("INSERT INTO detalle (fk_id_factura, rol_unico, NroLinDet, NmbItem, DscItem, QtyItem, UnmdItem, PrcItem, MontoItem, VlrCodigo, TpoCodigo, Qtyref, UnmdRef, FchVencim) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)",(factura_id, rol_unico, NroLinDet, NmbItem, DscItem, QtyItem, UnmdItem, PrcItem, MontoItem, VlrCodigo, TpoCodigo, Qtyref, UnmdRef, FchVencim))
+                        else:
+                            print("No se pudo obtener un ID de factura válido.")
+                       
                 #!_______________________________FIN  Insertar los valores en la tabla "detalle"__________________________________________________________
 
                 #!_______________________________ Insertar los valores en la tabla "referencia"__________________________________________________________
@@ -356,9 +381,12 @@ def execute_cycle():
                         FchRef = str(detalle.getElementsByTagName('FchRef')[0].firstChild.data)[:255]
 
                         
-                        # Actualizar los valores en la tabla "detalle"
-                        cursor.execute("INSERT INTO referencia (id_factura, NroLinRef, TpoDocRef, FolioRef, FchRef)VALUES(?,?,?,?,?)", id_factura, NroLinRef, TpoDocRef, FolioRef, FchRef)
-
+                        # Actualizar los valores en la tabla "referencia"
+                        # Luego, inserta los referencia solo si se obtuvo un ID de factura válido
+                        if factura_id is not None:
+                            cursor.execute("INSERT INTO referencia (fk_id_factura, rol_unico, NroLinRef, TpoDocRef, FolioRef, FchRef)VALUES(?,?,?,?,?,?)", factura_id, rol_unico, NroLinRef, TpoDocRef, FolioRef, FchRef)
+                        else:
+                            print("No se pudo obtener un ID de factura válido.")
                 #!_______________________________Fin Insertar los valores en la tabla "referencia"__________________________________________________________
                      # Eliminar el archivo leído de la carpeta "data"
             os.remove(os.path.join(folder_path, filename))
@@ -375,4 +403,3 @@ while True:
     time.sleep(60)
             
            
-
