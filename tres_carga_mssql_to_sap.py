@@ -24,7 +24,7 @@ def job():
 
     #! Configuración de la conexión MSSQL
     server = '10.8.0.51'
-    database = 'prueba_xml_2'
+    database = 'prueba_xml_3'
     username = 'LOC_SNAVARRO'
     password = 'caramelo7613'
     conn_sql_str = f'DRIVER={{ODBC Driver 17 for SQL Server}};SERVER={server};DATABASE={database};UID={username};PWD={password}'
