@@ -16,8 +16,8 @@ def execute_cycle():
     cursor = conn.cursor()
 
     # Ruta de la carpeta donde se encuentran los archivos XML
-    folder_path = r'/home/desarrollo1/Escritorio/xml/data'
-    error_folder_path = r'/home/desarrollo1/Escritorio/xml/errores'
+    folder_path = r'C:\Users\snavarro\Desktop\proyecto\factura_xml-main_2\carga_produccion\data'
+    error_folder_path = r'C:\Users\snavarro\Desktop\proyecto\factura_xml-main_2\carga_produccion\errores'
 
 
     # Obtener la lista de archivos en la carpeta de errores
@@ -280,19 +280,18 @@ def execute_cycle():
                             cursor.execute("UPDATE detalle SET NroLinDet = ?, NmbItem = ?, DscItem = ?, QtyItem = ?, UnmdItem = ?, PrcItem = ?, MontoItem = ?, VlrCodigo =?, TpoCodigo = ?, Qtyref = ?, UnmdRef = ?, FchVencim = ? WHERE rol_unico = ?", NroLinDet, NmbItem, DscItem, QtyItem, UnmdItem, PrcItem, MontoItem, VlrCodigo, TpoCodigo, Qtyref, UnmdRef,FchVencim, rol_unico)
                 
                     #!_________________________________________________________ UPDATE 4 campos referencias ____________________________________________________________
-                    for documento in root.getElementsByTagName('Documento'):
-                        id = documento.getAttribute('ID')
-                        for detalle in documento.getElementsByTagName('Referencia'):    
-                            
-                                                    
-                            NroLinRef = str(detalle.getElementsByTagName('NroLinRef')[0].firstChild.data)[:255]
-                            TpoDocRef = str(detalle.getElementsByTagName('TpoDocRef')[0].firstChild.data)[:255]
-                            FolioRef = str(detalle.getElementsByTagName('FolioRef')[0].firstChild.data)[:255]
-                            FchRef = str(detalle.getElementsByTagName('FchRef')[0].firstChild.data)[:255]
+                            for documento in root.getElementsByTagName('Documento'):
+                                id = documento.getAttribute('ID')
 
-                            
-                            # Actualizar los valores en la tabla "detalle"
-                            cursor.execute("UPDATE referencia SET NroLinRef = ?, TpoDocRef = ?, FolioRef = ?, FchRef = ? WHERE rol_unico = ?", NroLinRef, TpoDocRef, FolioRef, FchRef, rol_unico)
+                                for detalle in documento.getElementsByTagName('Referencia'):
+                                    NroLinRef = str(detalle.getElementsByTagName('NroLinRef')[0].firstChild.data)[:255]
+                                    TpoDocRef = str(detalle.getElementsByTagName('TpoDocRef')[0].firstChild.data)[:255]
+                                    FolioRef = str(detalle.getElementsByTagName('FolioRef')[0].firstChild.data)[:255]
+                                    FchRef = str(detalle.getElementsByTagName('FchRef')[0].firstChild.data)[:255]
+
+                                    # Actualizar los valores en la tabla "detalle"
+                                    # cursor.execute("UPDATE referencia SET NroLinRef = ?, TpoDocRef = ?, FolioRef = ?, FchRef = ? WHERE rol_unico = ?", NroLinRef, TpoDocRef, FolioRef, FchRef, rol_unico)
+                                    cursor.execute("UPDATE referencia SET NroLinRef = ?, FolioRef = ?, FchRef = ? WHERE TpoDocRef = ? and rol_unico = ?", NroLinRef, FolioRef, FchRef, TpoDocRef, rol_unico)
 
                     #!_________________________________________________________fin UPDATE 4 campos referencias ____________________________________________________________
                 
@@ -381,34 +380,38 @@ def execute_cycle():
 
                     for documento in root.getElementsByTagName('Documento'):
                         id = documento.getAttribute('ID')
+                    
                         for detalle in documento.getElementsByTagName('Referencia'):   
                             NroLinRef = str(detalle.getElementsByTagName('NroLinRef')[0].firstChild.data)[:255]
                             TpoDocRef = str(detalle.getElementsByTagName('TpoDocRef')[0].firstChild.data)[:255]
                             FolioRef = str(detalle.getElementsByTagName('FolioRef')[0].firstChild.data)[:255]
                             FchRef = str(detalle.getElementsByTagName('FchRef')[0].firstChild.data)[:255]
-
                             
                             # Actualizar los valores en la tabla "referencia"
                             # Luego, inserta los referencia solo si se obtuvo un ID de factura válido
                             if factura_id is not None:
-                                cursor.execute("INSERT INTO referencia (fk_id_factura, rol_unico, NroLinRef, TpoDocRef, FolioRef, FchRef)VALUES(?,?,?,?,?,?)", factura_id, rol_unico, NroLinRef, TpoDocRef, FolioRef, FchRef)
+                                cursor.execute("INSERT INTO referencia (fk_id_factura, rol_unico, NroLinRef, TpoDocRef, FolioRef, FchRef) VALUES (?, ?, ?, ?, ?, ?)", factura_id, rol_unico, NroLinRef, TpoDocRef, FolioRef, FchRef)
                             else:
                                 print("No se pudo obtener un ID de factura válido.")
-                    #!_______________________________Fin Insertar los valores en la tabla "referencia"__________________________________________________________
-                        # Eliminar el archivo leído de la carpeta "data"
-                os.remove(os.path.join(folder_path, filename))
 
+
+                    
+                    
+                # Eliminar el archivo leído de la carpeta "data"
+                os.remove(os.path.join(folder_path, filename))
+                
                 # Insertar los valores en la tabla "referencia"
                 conn.commit()
+            
             except:
                 # si no se puede leer el archivo, moverlo a la carpeta errores
-                shutil.move(os.path.join(folder_path,filename), os.path.join(error_folder_path, filename))    
-
+                shutil.move(os.path.join(folder_path, filename), os.path.join(error_folder_path, filename))    
+                
                 # Verificar si el archivo ya existe en la carpeta de errores
                 if filename in error_files:
                     # Eliminar el archivo duplicado de la carpeta de errores
                     os.remove(os.path.join(error_folder_path, filename))
-
+    
     # Cierra la conexión a la base de datos
     conn.close()       
 
@@ -416,5 +419,3 @@ def execute_cycle():
 while True:
     execute_cycle()
     time.sleep(60)
-            
-           
