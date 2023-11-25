@@ -25,8 +25,8 @@ def job():
     #! Configuración de la conexión MSSQL
     server = '10.8.0.51'
     database = 'prueba_xml_3'
-    username = 'LOC_SNAVARRO'
-    password = 'caramelo7613'
+    username = 'xxxxxx'
+    password = 'xxxxxxxx'
     conn_sql_str = f'DRIVER={{ODBC Driver 17 for SQL Server}};SERVER={server};DATABASE={database};UID={username};PWD={password}'
     conn_sql = pyodbc.connect(conn_sql_str)
 
