@@ -10,8 +10,8 @@ def execute_cycle():
     # Establecer la conexión a la base de datos
     server = '10.8.0.51'
     database = 'prueba_xml_3'
-    username = 'LOC_SNAVARRO'
-    password = 'caramelo7613'
+    username = 'xxxxxx'
+    password = 'xxxxxxx'
     conn = pyodbc.connect('DRIVER={ODBC Driver 17 for SQL Server};SERVER=' +server+';DATABASE='+database+';UID='+username+';PWD=' + password)
     cursor = conn.cursor()
 
