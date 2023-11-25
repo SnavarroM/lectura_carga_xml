@@ -8,7 +8,7 @@ import base64
 # Configuración de conexión IMAP
 host = "imap.gmail.com"
 username = "pruebafactura@cenabast.cl"
-password = 'mbbv kxua vrsk wcdo'
+password = 'xxxxxxxxx'
 download_folder = r'C:\Users\snavarro\Desktop\proyecto\factura_xml-main_2\carga_produccion\data'
 
 # Verificar si la carpeta de destino existe, si no, crearla
