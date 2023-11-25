@@ -74,8 +74,8 @@ def job():
 
     #! Configuración de la conexión SAP
     sap_params = {
-        "user": "snavarro",
-        "passwd": "caramelo7613",
+        "user": "xxxx",
+        "passwd": "xxxxxx",
         "ashost": "10.8.0.76",
         "sysnr": "00",
         "client": "400",
